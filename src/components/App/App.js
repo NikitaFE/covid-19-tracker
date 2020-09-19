@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
 } from '@material-ui/core';
+import Dictionary from '../../constants/Dictionary';
 import { sortData, prettyPrintStat } from '../../util';
 import InfoBox from '../InfoBox';
 import Map from '../Map';
@@ -16,13 +17,13 @@ import './App.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState('worldwide');
+  const [country, setCountry] = useState(Dictionary.WORLDWIDE);
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 20.80746, lng: 20.4796 });
   const [mapZoom, setMapZoom] = useState(2);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState('cases');
+  const [casesType, setCasesType] = useState(Dictionary.CASES);
 
   const getCountriesData = async () => {
     await fetch('https://disease.sh/v3/covid-19/countries')
@@ -47,7 +48,7 @@ function App() {
   };
 
   const getCountryInfo = async countryCode => {
-    const url = countryCode === 'worldwide'
+    const url = countryCode === Dictionary.WORLDWIDE
       ? 'https://disease.sh/v3/covid-19/all'
       : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
@@ -56,7 +57,7 @@ function App() {
       .then(data => {
         setCountry(countryCode);
         setCountryInfo(data);
-        if (countryCode === 'worldwide') {
+        if (countryCode === Dictionary.WORLDWIDE) {
           setMapCenter({ lat: 20.80746, lng: 20.4796 });
           setMapZoom(2);
         } else {
@@ -81,14 +82,14 @@ function App() {
     <div className="app">
       <div className="app__left">
         <div className="app__header">
-          <h1>COVID-19 TRACKER</h1>
+          <h1>{Dictionary.MAIN_TITLE}</h1>
           <FormControl className="app__dropdown">
             <Select
               variant="outlined"
               value={country}
               onChange={onCountryChange}
             >
-              <MenuItem value="worldwide">Worldwide</MenuItem>
+              <MenuItem value={Dictionary.WORLDWIDE}>{Dictionary.WORLDWIDE_CAP}</MenuItem>
               {countries.map(({ name, value }) => (
                 <MenuItem key={name} value={value}>{name}</MenuItem>
               ))}
@@ -99,24 +100,24 @@ function App() {
         <div className="app__stats">
           <InfoBox
             isRed
-            active={casesType === 'cases'}
-            onClick={() => setCasesType('cases')}
-            title="Coronavirus Cases"
+            active={casesType === Dictionary.CASES}
+            onClick={() => setCasesType(Dictionary.CASES)}
+            title={Dictionary.CORONAVIRUS_CASES}
             cases={prettyPrintStat(countryInfo.todayCases, true)}
             total={prettyPrintStat(countryInfo.cases)}
           /> 
           <InfoBox
-            active={casesType === 'recovered'}
-            onClick={() => setCasesType('recovered')}
-            title="Recovered"
+            active={casesType === Dictionary.RECOVERED}
+            onClick={() => setCasesType(Dictionary.RECOVERED)}
+            title={Dictionary.RECOVERED_CAP}
             cases={prettyPrintStat(countryInfo.todayRecovered, true)}
             total={prettyPrintStat(countryInfo.recovered)}
           />
           <InfoBox
             isRed
-            active={casesType === 'deaths'}
-            onClick={() => setCasesType('deaths')}
-            title="Deaths"
+            active={casesType === Dictionary.DEATHS}
+            onClick={() => setCasesType(Dictionary.DEATHS)}
+            title={Dictionary.DEATHS_CAP}
             cases={prettyPrintStat(countryInfo.todayDeaths, true)}
             total={prettyPrintStat(countryInfo.deaths)}
           />
@@ -126,9 +127,9 @@ function App() {
       </div>
       <Card className="app__right">
         <CardContent>
-          <h3 className="app__table-title">Live Cases by Country</h3>
+          <h3 className="app__table-title">{Dictionary.LIVE_CASES_BY_COUNTRY}</h3>
           <Table countries={tableData} />
-          <h3 className="app__graph-title">Worldwide new {casesType}</h3>
+          <h3 className="app__graph-title">{`${Dictionary.WORLDWIDE_NEW} ${casesType}`}</h3>
           <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
