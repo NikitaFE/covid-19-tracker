@@ -6,9 +6,11 @@ import {
   Card,
   CardContent,
 } from '@material-ui/core';
+import { sortData } from './util';
 import InfoBox from './InfoBox';
 import Map from './Map';
 import Table from './Table';
+import LineGraph from './LineGraph';
 import './App.css';
 
 function App() {
@@ -21,12 +23,13 @@ function App() {
     await fetch('https://disease.sh/v3/covid-19/countries')
       .then(res => res.json())
       .then(data => {
+        const sortedData = sortData(data);
         const countries = data.map(country => ({
           name: country.country,
           value: country.countryInfo.iso2,
         }));
 
-        setTableData(data);
+        setTableData(sortedData);
         setCountries(countries);
       });
   };
@@ -92,7 +95,7 @@ function App() {
           <h3>Live Cases by Country</h3>
           <Table countries={tableData} />
           <h3>Worldwide new cases</h3>
-          {/* Graph */}
+          <LineGraph />
         </CardContent>
       </Card>
     </div>
