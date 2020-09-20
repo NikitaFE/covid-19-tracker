@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import Dictionary from '../../constants/Dictionary';
 import { URL, tails } from '../../constants/api';
+import { MAP_CENTER, MIN_ZOOM, COUNTRY_ZOOM } from '../../constants';
 import { sortData, prettyPrintStat } from '../../util';
 import InfoBox from '../InfoBox';
 import Map from '../Map';
@@ -18,13 +19,13 @@ import './App.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState(Dictionary.WORLDWIDE);
+  const [country, setCountry] = useState(Dictionary.WORLDWIDE.toLowerCase());
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 20.80746, lng: 20.4796 });
-  const [mapZoom, setMapZoom] = useState(2);
+  const [mapCenter, setMapCenter] = useState(MAP_CENTER);
+  const [mapZoom, setMapZoom] = useState(MIN_ZOOM);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState(Dictionary.CASES);
+  const [casesType, setCasesType] = useState(Dictionary.CASES.toLowerCase());
 
   const getCountriesData = async () => {
     await fetch(`${URL}${tails.COUNTRIES}`)
@@ -49,7 +50,7 @@ function App() {
   };
 
   const getCountryInfo = async countryCode => {
-    const url = countryCode === Dictionary.WORLDWIDE
+    const url = countryCode === Dictionary.WORLDWIDE.toLowerCase()
       ? `${URL}${tails.ALL}`
       : `${URL}${tails.COUNTRIES}/${countryCode}`;
 
@@ -58,12 +59,12 @@ function App() {
       .then(data => {
         setCountry(countryCode);
         setCountryInfo(data);
-        if (countryCode === Dictionary.WORLDWIDE) {
-          setMapCenter({ lat: 20.80746, lng: 20.4796 });
-          setMapZoom(2);
+        if (countryCode === Dictionary.WORLDWIDE.toLowerCase()) {
+          setMapCenter(MAP_CENTER);
+          setMapZoom(MIN_ZOOM);
         } else {
           setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-          setMapZoom(4);
+          setMapZoom(COUNTRY_ZOOM);
         }
       });
   };
@@ -90,7 +91,7 @@ function App() {
               value={country}
               onChange={onCountryChange}
             >
-              <MenuItem value={Dictionary.WORLDWIDE}>{Dictionary.WORLDWIDE_CAP}</MenuItem>
+              <MenuItem value={Dictionary.WORLDWIDE.toLowerCase()}>{Dictionary.WORLDWIDE}</MenuItem>
               {countries.map(({ name, value }) => (
                 <MenuItem key={name} value={value}>{name}</MenuItem>
               ))}
@@ -101,24 +102,24 @@ function App() {
         <div className="app__stats">
           <InfoBox
             isRed
-            active={casesType === Dictionary.CASES}
-            onClick={() => setCasesType(Dictionary.CASES)}
+            active={casesType === Dictionary.CASES.toLowerCase()}
+            onClick={() => setCasesType(Dictionary.CASES.toLowerCase())}
             title={Dictionary.CORONAVIRUS_CASES}
             cases={prettyPrintStat(countryInfo.todayCases, true)}
             total={prettyPrintStat(countryInfo.cases)}
           /> 
           <InfoBox
-            active={casesType === Dictionary.RECOVERED}
-            onClick={() => setCasesType(Dictionary.RECOVERED)}
-            title={Dictionary.RECOVERED_CAP}
+            active={casesType === Dictionary.RECOVERED.toLowerCase()}
+            onClick={() => setCasesType(Dictionary.RECOVERED.toLowerCase())}
+            title={Dictionary.RECOVERED}
             cases={prettyPrintStat(countryInfo.todayRecovered, true)}
             total={prettyPrintStat(countryInfo.recovered)}
           />
           <InfoBox
             isRed
-            active={casesType === Dictionary.DEATHS}
-            onClick={() => setCasesType(Dictionary.DEATHS)}
-            title={Dictionary.DEATHS_CAP}
+            active={casesType === Dictionary.DEATHS.toLowerCase()}
+            onClick={() => setCasesType(Dictionary.DEATHS.toLowerCase())}
+            title={Dictionary.DEATHS}
             cases={prettyPrintStat(countryInfo.todayDeaths, true)}
             total={prettyPrintStat(countryInfo.deaths)}
           />

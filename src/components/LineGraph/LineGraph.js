@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import numeral from 'numeral';
+import Dictionary from '../../constants/Dictionary';
 import { URL, tails } from '../../constants/api';
 
 const options = {
@@ -48,10 +49,10 @@ const options = {
   },
 }
  
-function LineGraph({ casesType = 'cases', className }) {
+function LineGraph({ casesType = Dictionary.CASES.toLowerCase(), className }) {
   const [data, setData] = useState([]);
 
-  const buildChartData = (data, casesType = 'cases') => {
+  const buildChartData = (data, casesType = Dictionary.CASES.toLowerCase()) => {
     const chartData = [];
     let lastDataPoint;
 
