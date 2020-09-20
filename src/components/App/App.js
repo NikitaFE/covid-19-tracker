@@ -7,6 +7,7 @@ import {
   CardContent,
 } from '@material-ui/core';
 import Dictionary from '../../constants/Dictionary';
+import { URL, tails } from '../../constants/api';
 import { sortData, prettyPrintStat } from '../../util';
 import InfoBox from '../InfoBox';
 import Map from '../Map';
@@ -26,7 +27,7 @@ function App() {
   const [casesType, setCasesType] = useState(Dictionary.CASES);
 
   const getCountriesData = async () => {
-    await fetch('https://disease.sh/v3/covid-19/countries')
+    await fetch(`${URL}${tails.COUNTRIES}`)
       .then(res => res.json())
       .then(data => {
         const sortedData = sortData(data);
@@ -42,15 +43,15 @@ function App() {
   };
 
   const getWorldwideInfo = async () => {
-    await fetch('https://disease.sh/v3/covid-19/all')
+    await fetch(`${URL}${tails.ALL}`)
       .then(res => res.json())
       .then(data => setCountryInfo(data));
   };
 
   const getCountryInfo = async countryCode => {
     const url = countryCode === Dictionary.WORLDWIDE
-      ? 'https://disease.sh/v3/covid-19/all'
-      : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+      ? `${URL}${tails.ALL}`
+      : `${URL}${tails.COUNTRIES}/${countryCode}`;
 
     await fetch(url)
       .then(res => res.json())

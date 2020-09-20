@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import numeral from 'numeral';
+import { URL, tails } from '../../constants/api';
 
 const options = {
   legend: {
@@ -69,7 +70,7 @@ function LineGraph({ casesType = 'cases', className }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=120')
+      await fetch(`${URL}${tails.LAST_120_DAYS}`)
         .then(res => res.json())
         .then(data => {
           const chartData = buildChartData(data, casesType);
