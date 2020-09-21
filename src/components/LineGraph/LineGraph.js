@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import numeral from 'numeral';
+import PropTypes from 'prop-types';
 
 import Dictionary from '../../constants/Dictionary';
 import { URL, tails } from '../../constants/api';
@@ -99,6 +100,15 @@ function LineGraph({ casesType = Dictionary.CASES.toLowerCase(), className }) {
       )}
     </div>
   )
+};
+
+LineGraph.propTypes = {
+  casesType: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
+};
+
+LineGraph.defaultProps = {
+  className: 'app__graph',
 };
 
 export default LineGraph;

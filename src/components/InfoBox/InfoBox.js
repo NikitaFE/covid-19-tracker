@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import Dictionary from '../../constants/Dictionary';
 
@@ -21,6 +22,23 @@ function InfoBox({ title, cases, isRed, active, total, onClick }) {
       </CardContent>
     </Card>
   )
+};
+
+InfoBox.propTypes = {
+  title: PropTypes.string.isRequired,
+  cases: PropTypes.string.isRequired,
+  isRed: PropTypes.bool,
+  active: PropTypes.bool.isRequired,
+  total: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+InfoBox.defaultProps = {
+  title: Dictionary.CASES,
+  cases: '1234',
+  active: false,
+  total: '4321',
+  onClick: () => {},
 }
 
 export default InfoBox;
