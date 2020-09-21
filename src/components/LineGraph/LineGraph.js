@@ -1,55 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 
 import Dictionary from '../../constants/Dictionary';
 import { URL, tails } from '../../constants/api';
-
-const options = {
-  legend: {
-    display: false,
-  },
-  elements: {
-    point: {
-      radius: 0,
-    },
-  },
-  maintainAspectRatio: false,
-  tooltips: {
-    mode: "index",
-    intersect: false,
-    callbacks: {
-      label: function (tooltipItem) {
-        return numeral(tooltipItem.value).format("+0,0");
-      },
-    },
-  },
-  scales: {
-    xAxes: [
-      {
-        type: "time",
-        time: {
-          parser: "MM/DD/YY",
-          tooltipFormat: "ll",
-        },
-      },
-    ],
-    yAxes: [
-      {
-        gridLines: {
-          display: false,
-        },
-        ticks: {
-          // Include a dollar sign in the ticks
-          callback: function (value) {
-            return numeral(value).format("0a");
-          },
-        },
-      },
-    ],
-  },
-}
+import { options, graphColors } from '../../constants/graphSettings';
  
 function LineGraph({ casesType = Dictionary.CASES.toLowerCase(), className }) {
   const [data, setData] = useState([]);
@@ -84,14 +39,21 @@ function LineGraph({ casesType = Dictionary.CASES.toLowerCase(), className }) {
     fetchData();
   }, [casesType]);
 
+  const backgroundColor = casesType
+    ? graphColors[casesType].rgba
+    : graphColors[Dictionary.CASES.toLowerCase()].rgba;
+  const borderColor = casesType
+    ? graphColors[casesType].hex
+    : graphColors[Dictionary.CASES.toLowerCase()].hex;
+
   return (
     <div className={className}>
       {data?.length > 0 && (
         <Line 
           data={{
             datasets: [{
-              backgroundColor: "rgba(204, 16, 52, 0.5)",
-              borderColor: "#CC1034",
+              backgroundColor,
+              borderColor,
               data,
             }]
           }}
