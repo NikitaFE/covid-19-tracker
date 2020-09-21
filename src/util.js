@@ -1,6 +1,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import { Circle, Popup } from 'react-leaflet';
+
 import Dictionary from './constants/Dictionary';
 
 const casesTypeColors = {
@@ -28,7 +29,7 @@ export const prettyPrintStat = (stat, plus = false) => {
   return stat ? `${plusSymb}${numeral(stat).format("0.0a")}` : `${plusSymb}0`;
 };
 
-export const showDataOnMap = (data, casesType = Dictionary.CASES.toLowerCase()) => (
+export const showDataOnMap = (data, classes, casesType = Dictionary.CASES.toLowerCase()) => (
   data.map(country => (
     <Circle
       center={[country.countryInfo.lat, country.countryInfo.long]}
@@ -41,19 +42,19 @@ export const showDataOnMap = (data, casesType = Dictionary.CASES.toLowerCase()) 
       key={country.country}
     >
       <Popup>
-        <div className="info-container">
+        <div className={classes.infoContainer}>
           <div
-            className="info-flag"
+            className={classes.infoFlag}
             style={{ backgroundImage: `url(${country.countryInfo.flag})` }}
           ></div>
-          <div className="info-name">{country.country}</div>
-          <div className="info-confirmed">
+          <div className={classes.infoName}>{country.country}</div>
+          <div className={classes.infoConfirmed}>
             {`${Dictionary.CASES}: ${numeral(country.cases).format("0,0")}`}
           </div>
-          <div className="info-recovered">
+          <div className={classes.infoRecovered}>
             {`${Dictionary.RECOVERED}: ${numeral(country.recovered).format("0,0")}`}
           </div>
-          <div className="info-deaths">
+          <div className={classes.infoDeaths}>
             {`${Dictionary.DEATHS}: ${numeral(country.deaths).format("0,0")}`}
           </div>
         </div>

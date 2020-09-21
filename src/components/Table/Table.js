@@ -2,16 +2,18 @@ import React from 'react';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 
-import './Table.css';
+import useStyles from './Table.styled.js';
 
-function Table({ countries }) {
+const Table = ({ countries }) => {
+  const classes = useStyles();
+
   return (
-    <table className="table">
-      <tbody className="table__body">
+    <table className={classes.table}>
+      <tbody className={classes.tableBody}>
         {countries.map(({ country, cases }) => (
-          <tr key={country}>
-            <td>{country}</td>
-            <td>
+          <tr className={classes.tableRow} key={country}>
+            <td className={classes.tableData}>{country}</td>
+            <td className={classes.tableData}>
               <strong>
                 {numeral(cases).format("0,0")}
               </strong>

@@ -5,17 +5,19 @@ import PropTypes from 'prop-types';
 import { showDataOnMap } from "../../util";
 import { MAP_URL, MAP_ATTRIBUTION } from '../../constants';
 
-import "./Map.css";
+import useStyles from "./Map.styled.js";
 
 function Map({ countries, casesType, center, zoom }) {
+  const classes = useStyles();
+
   return (
-    <div className="map">
+    <div className={classes.map}>
       <LeafletMap center={center} zoom={zoom} minZoom={2} worldCopyJump={true}>
         <TileLayer
           url={MAP_URL}
           attribution={MAP_ATTRIBUTION}
         />
-        {showDataOnMap(countries, casesType)}
+        {showDataOnMap(countries, classes, casesType)}
       </LeafletMap>
     </div>
   );

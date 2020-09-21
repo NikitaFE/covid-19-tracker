@@ -17,9 +17,9 @@ import Table from '../Table';
 import LineGraph from '../LineGraph';
 
 import 'leaflet/dist/leaflet.css';
-import './App.css';
+import useStyles from './App.styled.js';
 
-function App() {
+const App = () => {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState(Dictionary.WORLDWIDE.toLowerCase());
   const [countryInfo, setCountryInfo] = useState({});
@@ -28,6 +28,7 @@ function App() {
   const [mapZoom, setMapZoom] = useState(MIN_ZOOM);
   const [mapCountries, setMapCountries] = useState([]);
   const [casesType, setCasesType] = useState(Dictionary.CASES.toLowerCase());
+  const classes = useStyles();
 
   const getCountriesData = async () => {
     await fetch(`${URL}${tails.COUNTRIES}`)
@@ -83,11 +84,11 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <div className="app__left">
-        <div className="app__header">
+    <div className={classes.app}>
+      <div className={classes.appLeft}>
+        <div className={classes.appHeader}>
           <h1>{Dictionary.MAIN_TITLE}</h1>
-          <FormControl className="app__dropdown">
+          <FormControl className={classes.appDropdown}>
             <Select
               variant="outlined"
               value={country}
@@ -101,7 +102,7 @@ function App() {
           </FormControl>
         </div>
 
-        <div className="app__stats">
+        <div className={classes.appStats}>
           <InfoBox
             isRed
             active={casesType === Dictionary.CASES.toLowerCase()}
@@ -129,12 +130,12 @@ function App() {
 
         <Map countries={mapCountries} casesType={casesType} center={mapCenter} zoom={mapZoom} />
       </div>
-      <Card className="app__right">
+      <Card className={classes.appRight}>
         <CardContent>
-          <h3 className="app__table-title">{Dictionary.LIVE_CASES_BY_COUNTRY}</h3>
+          <h3 className={classes.appTableTitle}>{Dictionary.LIVE_CASES_BY_COUNTRY}</h3>
           <Table countries={tableData} />
-          <h3 className="app__graph-title">{`${Dictionary.WORLDWIDE_NEW} ${casesType}`}</h3>
-          <LineGraph className="app__graph" casesType={casesType} />
+          <h3 className={classes.appGraphTitle}>{`${Dictionary.WORLDWIDE_NEW} ${casesType}`}</h3>
+          <LineGraph className={classes.appGraph} casesType={casesType} />
         </CardContent>
       </Card>
     </div>
