@@ -1,14 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
   map: {
     flexGrow: 1,
     height: 500,
-    backgroundColor: 'white',
+    backgroundColor: palette.white,
     padding: '1rem',
     borderRadius: 20,
     marginTop: 16,
-    boxShadow: '0 0 8px -4px rgba(0, 0, 0, 0.5)',
+    boxShadow: `0 0 8px -4px ${palette.black50}`,
     '& .leaflet-container': {
       height: '100%',
       borderRadius: 12,
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   infoName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#555',
+    color: palette.emperor,
   },
   infoContainer: {
     width: 150,

@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
   table: {
     width: '100%',
     marginBottom: 20,
-    color: '#6a5d5d',
+    color: palette.scorpion,
     borderCollapse: 'collapse',
   },
   tableBody: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'space-between',
     '&:nth-of-type(odd)': {
-      backgroundColor: '#f3f2f8',
+      backgroundColor: palette.whisper,
     },
   },
   tableData: {

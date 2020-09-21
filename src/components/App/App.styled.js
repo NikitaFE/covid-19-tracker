@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
   app: {
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -40,12 +40,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     marginBottom: 20,
     '& > h1': {
-      color: '#fc3c3c',
+      color: palette.coralRed,
       fontSize: '2rem',
     },
   },
   appDropdown: {
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
   appStats: {
     display: 'flex',
