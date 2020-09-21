@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
 } from '@material-ui/core';
+
 import Dictionary from '../../constants/Dictionary';
 import { URL, tails } from '../../constants/api';
 import { MAP_CENTER, MIN_ZOOM, COUNTRY_ZOOM } from '../../constants';
@@ -14,6 +15,7 @@ import InfoBox from '../InfoBox';
 import Map from '../Map';
 import Table from '../Table';
 import LineGraph from '../LineGraph';
+
 import 'leaflet/dist/leaflet.css';
 import './App.css';
 
